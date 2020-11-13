@@ -7,6 +7,8 @@ require('dotenv').config();
 
 var app = express();
 
+const HOST_ADDR = 'localhost';
+
 app.use(cors());
 app.use(express.json());
 
@@ -16,10 +18,10 @@ if (process.env.HTTPS == 1) { //with ssl
             key: fs.readFileSync(process.env.SSL_KEY_PATH),
             cert: fs.readFileSync(process.env.SSL_CERT_PATH)
         },
-        app).listen(process.env.HOST_PORT);
+        app).listen(process.env.HOST_PORT, HOST_ADDR);
     console.log("Https server running on port " + process.env.HOST_PORT);
 } else { //http
-    app.listen(process.env.HOST_PORT, () => {
+    app.listen(process.env.HOST_PORT, HOST_ADDR, () => {
         console.log("Http server running on port " + process.env.HOST_PORT);
     });
 }//http
